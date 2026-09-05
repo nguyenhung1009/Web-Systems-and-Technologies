@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Engine</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f7f7f8;
+            color: #202124;
+
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            height: 120px;
+            background-color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo span {
+            font-size: 50px;
+        }
+
+        .logo h2 {
+            color: #595be3;
+        }
+
+        .menu {
+            display: flex;
+            gap: 50px;
+        }
+
+        .menu a{
+            text-decoration: none;
+            color: #555;
+            font-size: 17px;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user .avatar {
+            width: 36px;
+            height: 36px;
+            top: 32px;
+            object-fit: cover;
+        }
+
+        .user img {
+            width: 20px;
+            height: 20px;
+            top: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        main {
+            flex: 1;
+            padding-top: 150px;
+        }
+
+        .search-box {
+            width: 640px;
+            height: 58px;
+            margin: auto;
+            background-color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 15px;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            background: transparent;
+        }
+
+        .search-box input::placeholder {
+            color: #c5c9d0;
+        }
+
+        .trending {
+            margin-top: 130px;
+        }
+
+        .trending h1{
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+
+        .cards {
+            width: 870px;
+            display: grid;
+            grid-template-columns: repeat(3, 275px);
+            gap: 22px;
+        }
+
+        .trend-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .card {
+            width: 275px;
+            height: 112px;
+            background-color: white;
+            border: 1px solid #d9d9d9;
+            border-radius: 9px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .image-box {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .trend-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .play-button {
+            width: 38px;
+            height: 38px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .card-info {
+            flex: 1;
+        }
+
+        .card-info h3 {
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.6;
+            color: #363b45;
+            margin: 0 0 13px 0;
+        }
+
+        .search-view {
+            width: 105px;
+            height: auto;
+        }
+
+        .arrow-btn {
+            border: none;
+            background: transparent;
+            font-size: 28px;
+            color: #626b78;
+            cursor: pointer;
+        }
+
+        .text-card {
+            display: block;
+        }
+
+        .text-card h3 {
+            font-size: 12px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .description {
+            font-size: 11px;
+            color: #9ca1aa;
+            margin-bottom: 12px;
+        }
+
+        .show-more {
+            display: block;
+            margin: 35px auto 0;
+            padding: 13px 20px;
+            border: none;
+            border-radius: 7px;
+            background-color: #595be3;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .show-more:hover {
+            background-color: #484ad2;
+        }
+
+        footer {
+            height: 70px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 45px;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: #626975;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="Image/Group.png" alt="Logo">
+            <h2>SearchEngine</h2>
+        </div>
+
+        <nav class="menu">
+            <a href="#">Images</a>
+            <a href="#">Video</a>
+            <a href="#">Shopping</a>
+            <a href="#">News</a>
+        </nav>
+
+        <div class="user">
+            <img class="avatar" src="Image/Avatar 2.png" alt="Avatar">
+            <span>Sofia Perez</span>
+            <img src="Image/Chevron down large 2.png" alt="⌄">
+        </div>
+    </header>
+
+
+    <main>
+        <div class="search-box">
+            <img src="Image/Search.png" alt="Search">
+            <input type="text" placeholder="Search everything">
+            <img src="Image/Image.png" alt="Image">
+            <img src="Image/Microphone.png" alt="Microphone">
+        </div>
+
+        <section class="trending">
+
+            <h1>Today's trending searches</h1>
+
+            <div class="trend-row">
+                <button class="arrow-btn">
+                    <img src="Image/Arrow left.png" alt="Left">
+                </button>
+
+                <div class="cards">
+
+                    <div class="card">
+
+                        <div class="image-box">
+
+                            <img class="trend-img" src="Image/Image 7.png" alt="Technology">
+
+                            <img class="play-button" src="Image/Button 6.png" alt="Play">
+
+                        </div>
+
+
+                        <div class="card-info">
+
+                            <h3>Major Tech Breakthrough Announced</h3>
+
+                            <img class="search-view" src="Image/Tag 7.png" alt="120K searches">
+
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+
+                        <div class="image-box">
+                            <img class="trend-img" src="Image/Image 9.png" alt="Environment">
+                        </div>
+
+
+                        <div class="card-info">
+                            <h3>Environmental Progress 2025</h3>
+
+                            <img class="search-view" src="Image/Tag 8.png" alt="110K searches">
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="image-box">
+                            <img class="trend-img" src="Image/Image 10.png" alt="Mental Health">
+                        </div>
+
+                        <div class="card-info">
+                            <h3>Morning Affirmations Mental Health</h3>
+
+                            <img class="search-view" src="Image/Tag 9.png" alt="110K searches">
+                        </div>
+                    </div>
+
+                    <div class="card text-card">
+                        <h3>Best Spring Travel Destinations 2025</h3>
+
+                        <p class="description">
+                            <img src="Image/Edit brightness 2.png" alt="Star">
+                            For a spring 2025 trip, consider ...
+                        </p>
+
+                        <img class="search-view" src="Image/Tag 10.png" alt="100K searches">
+
+                    </div>
+
+                    <div class="card">
+
+                        <div class="image-box">
+
+                            <img class="trend-img" src="Image/Image 12.png" alt="Workout">
+                        
+                            <img class="play-button" src="Image/Button 8.png" alt="Play">
+
+                        </div>
+
+                        <div class="card-info">
+                            <h3>Easy Home Workouts for Beginners</h3>
+
+                            <img class="search-view" src="Image/Tag 12.png" alt="90K searches">
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+
+                        <div class="image-box">
+
+                            <img class="trend-img" src="Image/Image 11.png" alt="Fashion">
+                        </div>
+
+                        <div class="card-info">
+                            <h3>Top Trending Fashion Styles This Season</h3>
+
+                            <img class="search-view" src="Image/Tag 11.png" alt="80K searches">
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="arrow-btn">
+                    <img src="Image/Arrow right.png" alt="Right">
+                </button>
+
+            </div>
+
+            <button class="show-more">Show More</button>
+        </section>
+    </main>
+
+
+    <footer>
+        <a href="#">Manage Cookies</a>
+
+        <a href="#">Privacy</a>
+
+        <a href="#">Legal</a>
+
+        <a href="#">About us</a>
+
+        <a href="#">Help</a>
+
+        <a href="#">Feedback</a>
+    </footer>
+</body>
+</html>
