@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventPromotion</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #323842;
+            background-color: white;
+        }
+
+        header {
+            height: 70px;
+            width: 100%;
+        }
+
+        .header-container {
+            width: 1175px;
+            max-width: 90%;
+            height: 100%;
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: relative;
+        }
+
+        .nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #62676d;
+            font-size: 13px;
+        }
+
+        .nav a:hover {
+            color: #000;
+        }
+
+        .logo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .logo img {
+            width: 100px;
+            display: block;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .search {
+            width: 200px;
+            height: 36px;
+
+            border: 1px solid #d9dde3;
+            border-radius: 4px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 12px;
+        }
+
+        .search img {
+            width: 13px;
+            margin-right: 8px;
+        }
+
+        .search input {
+            width: 100%;
+            border: none;
+            outline: none;
+
+            font-size: 12px;
+            color: #555;
+        }
+
+        .search input::placeholder {
+            color: #b5bac2;
+        }
+
+        .cart {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            font-size: 13px;
+            color: #30343b;
+        }
+
+        .cart {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart img {
+            width: 75px;
+            height: auto;
+            display: block;
+        }
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+
+        main {
+            width: 1175px;
+            max-width: 90%;
+            margin: 65px auto 65px;
+        }
+
+        main h1 {
+            text-align: center;
+
+            font-size: 50px;
+            line-height: 1;
+
+            margin-bottom: 65px;
+
+            font-weight: 700;
+            color: #303640;
+        }
+
+
+        .promotion {
+            width: 100%;
+            height: 305px;
+
+            display: flex;
+
+            border: 1px solid #dfe2e6;
+            border-radius: 7px;
+
+            overflow: hidden;
+
+            margin-bottom: 47px;
+        }
+
+        .promotion-image {
+            width: 53%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
+        .promotion .content {
+            width: 47%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            padding: 35px 65px;
+        }
+
+        .content h2 {
+            font-size: 31px;
+            font-weight: 700;
+
+            margin-bottom: 16px;
+
+            color: #303640;
+        }
+
+        .content p {
+            font-size: 18px;
+            line-height: 1.5;
+
+            color: #4d535c;
+        }
+
+        .content .quote {
+            margin-top: 5px;
+
+            font-size: 16px;
+            font-style: italic;
+
+            color: #9298a1;
+        }
+
+        .button {
+            width: 200px;
+            height: 52px;
+
+            margin-top: 25px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-color: #48a482;
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            border-radius: 3px;
+        }
+
+        .button:hover {
+            background-color: #3d9273;
+        }
+
+
+        .promotion.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .promotion.reverse .content {
+            padding-left: 63px;
+            padding-right: 60px;
+        }
+
+
+        .gift-banner {
+            width: 100%;
+            height: 370px;
+
+            position: relative;
+
+            border-radius: 7px;
+            overflow: hidden;
+
+            margin-top: 5px;
+        }
+
+        .gift-banner > img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+            display: block;
+        }
+
+        .gift-content {
+            position: absolute;
+
+            top: 50%;
+            left: 54%;
+
+            transform: translateY(-50%);
+
+            width: 40%;
+        }
+
+        .gift-content h2 {
+            font-size: 48px;
+            line-height: 1.1;
+
+            margin-bottom: 16px;
+
+            color: #303640;
+        }
+
+        .gift-content p {
+            font-size: 18px;
+            line-height: 1.5;
+
+            color: #4d535c;
+
+            max-width: 430px;
+        }
+
+        .gift-content .button {
+            margin-top: 18px;
+        }
+
+
+        footer {
+            width: 100%;
+
+            background-color: #1d222a;
+            color: white;
+
+            padding: 95px 0 85px;
+        }
+
+        .footer-container {
+            width: 1175px;
+            max-width: 90%;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns: 150px 170px 260px 1fr;
+
+            gap: 25px;
+        }
+
+        .footer-column h3,
+        .newsletter h3 {
+            font-size: 20px;
+
+            margin-bottom: 25px;
+
+            color: #f3f4f5;
+        }
+
+        .footer-column a {
+            display: block;
+
+            text-decoration: none;
+
+            color: #eef0f3;
+
+            margin-bottom: 18px;
+
+            font-size: 13px;
+        }
+
+        .footer-column a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-column p {
+            font-size: 13px;
+
+            margin-bottom: 14px;
+
+            color: #f0f1f3;
+        }
+
+        .footer-column .bold {
+            font-weight: bold;
+
+            margin-bottom: 25px;
+        }
+
+
+        .language {
+            width: 128px;
+            height: 38px;
+
+            margin-top: 12px;
+
+            background: transparent;
+
+            color: white;
+
+            border: 1px solid #d8dde5;
+            border-radius: 4px;
+
+            padding: 0 12px;
+        }
+
+        .language option {
+            color: black;
+        }
+
+
+        .newsletter {
+            padding-left: 25px;
+        }
+
+        .newsletter > p {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .subscribe {
+            width: 100%;
+            max-width: 430px;
+
+            height: 52px;
+
+            display: flex;
+
+            border: 1px solid #737984;
+            border-radius: 5px;
+
+            overflow: hidden;
+        }
+
+        .email-box {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+
+            padding-left: 18px;
+        }
+
+        .email-icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .email-box input {
+            flex: 1;
+
+            border: none;
+            outline: none;
+
+            background: transparent;
+
+            color: white;
+
+            font-size: 16px;
+        }
+
+        .email-box input::placeholder {
+            color: #c3c7ce;
+        }
+
+        .subscribe button {
+            width: 125px;
+
+            border: none;
+
+            background-color: #48a482;
+            color: white;
+
+            font-size: 15px;
+
+            cursor: pointer;
+        }
+
+        .subscribe button:hover {
+            background-color: #3d9273;
+        }
+
+        .social {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            margin-top: 28px;
+        }
+
+        .social img {
+            width: 22px;
+            height: 22px;
+
+            object-fit: contain;
+        }
+
+        .copyright {
+            margin-top: 38px;
+
+            font-size: 12px;
+
+            color: #d9dce1;
+        }
+
+
+        @media (max-width: 900px) {
+
+            .logo {
+                position: static;
+                transform: none;
+            }
+
+            .header-container {
+                gap: 20px;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .search {
+                width: 150px;
+            }
+
+            main h1 {
+                font-size: 40px;
+            }
+
+            .promotion {
+                height: auto;
+
+                flex-direction: column;
+            }
+
+            .promotion.reverse {
+                flex-direction: column;
+            }
+
+            .promotion-image {
+                width: 100%;
+                height: 300px;
+            }
+
+            .promotion .content {
+                width: 100%;
+
+                padding: 40px;
+            }
+
+            .gift-banner {
+                height: 450px;
+            }
+
+            .gift-content {
+                left: 50%;
+
+                width: 45%;
+            }
+
+            .gift-content h2 {
+                font-size: 35px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+                row-gap: 60px;
+            }
+
+            .newsletter {
+                padding-left: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .search {
+                display: none;
+            }
+
+            main {
+                margin-top: 40px;
+            }
+
+            main h1 {
+                font-size: 34px;
+                margin-bottom: 40px;
+            }
+
+            .promotion-image {
+                height: 230px;
+            }
+
+            .promotion .content {
+                padding: 30px;
+            }
+
+            .content h2 {
+                font-size: 26px;
+            }
+
+            .content p {
+                font-size: 15px;
+            }
+
+            .gift-banner {
+                height: 420px;
+            }
+
+            .gift-banner > img {
+                filter: brightness(0.9);
+            }
+
+            .gift-content {
+                left: 8%;
+                width: 84%;
+            }
+
+            .gift-content h2 {
+                font-size: 34px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="header-container">
+
+            <nav class="nav">
+                <a href="#">Shop</a>
+                <a href="#">Offers</a>
+                <a href="#">Our story</a>
+                <a href="#">Blog</a>
+            </nav>
+
+
+            <div class="logo">
+                <img src="Image 1.png" alt="Logo">
+            </div>
+
+
+            <div class="header-right">
+
+                <div class="search">
+
+                    <img src="search.png" alt="Search">
+
+                    <input
+                        type="text"
+                        placeholder="Search product..."
+                    >
+
+                </div>
+
+
+                <div class="cart">
+
+                    <img src="Button 1.png" alt="Cart">
+
+                </div>
+
+
+                <img
+                    class="avatar"
+                    src="Avatar 1.png"
+                    alt="Avatar"
+                >
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <h1>Promotions</h1>
+
+        <section class="promotion">
+
+            <img
+                class="promotion-image"
+                src="Image 1 (1).png"
+                alt="Promotion"
+            >
+
+
+            <div class="content">
+
+                <h2>Promotion title</h2>
+
+
+                <p>
+                    Et ipsum irure amet cupidatat mollit exercitation
+                    consequat duis aliquip. Reprehenderit Lorem
+                    veniam pariatur esse pariatur in aute tempor au
+                </p>
+
+
+                <p class="quote">
+                    *Velit deserunt elit proident velit anim adipisicing
+                </p>
+
+
+                <a href="#" class="button">
+                    Shop now
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <section class="promotion reverse">
+
+            <img
+                class="promotion-image"
+                src="Image 1 (2).png"
+                alt="Promotion"
+            >
+
+
+            <div class="content">
+
+                <h2>Promotion title</h2>
+
+
+                <p>
+                    Et ipsum irure amet cupidatat mollit exercitation
+                    consequat duis aliquip. Reprehenderit Lorem
+                    veniam pariatur esse pariatur in aute tempor au
+                </p>
+
+
+                <p class="quote">
+                    *Velit deserunt elit proident velit anim adipisicing
+                </p>
+
+
+                <a href="#" class="button">
+                    Shop now
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <section class="gift-banner">
+
+            <img
+                src="Image 1 (3).png"
+                alt="Gift for your skin"
+            >
+
+
+            <div class="gift-content">
+
+                <h2>
+                    Gift for your skin
+                </h2>
+
+
+                <p>
+                    Enim officia magna ut esse aliquip irure
+                    consectetur dolor dolor commodo et. Cupid
+                </p>
+
+
+                <a href="#" class="button">
+                    Shop Now
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <div class="footer-container">
+
+
+            <div class="footer-column">
+
+                <h3>About</h3>
+
+                <a href="#">Home</a>
+                <a href="#">Shop</a>
+                <a href="#">Our story</a>
+                <a href="#">Blogs</a>
+
+
+                <select class="language">
+
+                    <option>English</option>
+                    <option>Vietnamese</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>Help</h3>
+
+                <a href="#">Shipping & Returns</a>
+                <a href="#">Track Order</a>
+                <a href="#">FAQs</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>Contact</h3>
+
+
+                <p>Phone:</p>
+
+                <p class="bold">
+                    (+1) 123 456 7893
+                </p>
+
+
+                <p>Email:</p>
+
+                <p class="bold">
+                    name@email.com
+                </p>
+
+            </div>
+
+
+            <div class="newsletter">
+
+                <h3>
+                    Receive new promotions
+                </h3>
+
+
+                <p>
+                    Duis ea tempor commodo amet reprehende
+                </p>
+
+
+                <div class="subscribe">
+
+                    <div class="email-box">
+
+                        <span class="email-icon">
+                            ✉
+                        </span>
+
+
+                        <input
+                            type="email"
+                            placeholder="Input your email"
+                        >
+
+                    </div>
+
+
+                    <button>
+                        Subscribe
+                    </button>
+
+                </div>
+
+
+                <div class="social">
+
+                    <img
+                        src="Twitter 1.png"
+                        alt="Twitter"
+                    >
+
+                    <img
+                        src="Facebook 1.png"
+                        alt="Facebook"
+                    >
+
+                    <img
+                        src="LinkedIn 1.png"
+                        alt="LinkedIn"
+                    >
+
+                    <img
+                        src="YouTube 1.png"
+                        alt="YouTube"
+                    >
+
+                </div>
+
+
+                <div class="copyright">
+
+                    © 2022 Brand, Inc.
+                    &nbsp;•&nbsp;
+                    Privacy
+                    &nbsp;•&nbsp;
+                    Terms
+                    &nbsp;•&nbsp;
+                    Sitemap
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

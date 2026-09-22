@@ -1,0 +1,2220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Product Details</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #303640;
+            background: white;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        .container {
+            width: 1170px;
+            max-width: 90%;
+            margin: auto;
+        }
+
+        header {
+            height: 65px;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .header-container {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav a {
+            font-size: 13px;
+            color: #646a72;
+        }
+
+        .nav a:first-child {
+            color: #45a57d;
+        }
+
+        .logo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .logo img {
+            width: 105px;
+            height: auto;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .search {
+            width: 200px;
+            height: 35px;
+            border: 1px solid #dfe2e7;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+        }
+
+        .search-icon {
+            width: 13px;
+            height: 13px;
+            border: 1.5px solid #b7bcc2;
+            border-radius: 50%;
+            position: relative;
+            margin-right: 8px;
+        }
+
+        .search-icon::after {
+            content: "";
+            width: 5px;
+            height: 1.5px;
+            background: #b7bcc2;
+            position: absolute;
+            right: -4px;
+            bottom: -2px;
+            transform: rotate(45deg);
+        }
+
+        .search input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 11px;
+        }
+
+        .search input::placeholder {
+            color: #b8bdc4;
+        }
+
+        .cart-text,
+        .user-icon {
+            font-size: 12px;
+            color: #444a52;
+        }
+
+        .cart-text {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cart-symbol {
+            font-size: 17px;
+        }
+
+        .breadcrumb {
+            padding-top: 55px;
+            padding-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            color: #4ca580;
+        }
+
+        .breadcrumb span {
+            color: #a4a8ad;
+        }
+
+        .product-main {
+            display: grid;
+            grid-template-columns: 70px 430px 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        .thumbnails {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .thumb {
+            width: 70px;
+            height: 105px;
+            overflow: hidden;
+            cursor: pointer;
+            background: #f5f5f5;
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumb.active {
+            border: 2px solid #efb84f;
+        }
+
+        .main-product-image {
+            height: 470px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-product-image img {
+            width: 75%;
+            height: 90%;
+            object-fit: contain;
+        }
+
+        .product-info {
+            padding-left: 18px;
+        }
+
+        .best-badge {
+            display: inline-block;
+            background: #f4c05c;
+            color: #9d721f;
+            padding: 6px 13px;
+            border-radius: 16px;
+            font-size: 9px;
+            margin-bottom: 13px;
+        }
+
+        .product-info h1 {
+            font-size: 36px;
+            margin-bottom: 9px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #777d84;
+            margin-bottom: 14px;
+        }
+
+        .price-line {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .current-price {
+            font-size: 30px;
+            color: #45a17a;
+            font-weight: 700;
+        }
+
+        .old-price {
+            font-size: 17px;
+            color: #a3a8ae;
+            text-decoration: line-through;
+        }
+
+        .description {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #696f77;
+            margin-bottom: 15px;
+        }
+
+        .review-line {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+
+        .review-line strong {
+            color: #434951;
+        }
+
+        .stars {
+            color: #f5bc2f;
+            letter-spacing: 2px;
+        }
+
+        .benefit-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 11px;
+            font-size: 12px;
+            color: #666d74;
+        }
+
+        .benefit-line img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 18px;
+            margin-bottom: 7px;
+        }
+
+        .size-select {
+            width: 100%;
+            height: 40px;
+            border: none;
+            background: #f2f3f4;
+            padding: 0 15px;
+            color: #656b72;
+            outline: none;
+        }
+
+        .quantity-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .quantity-btn {
+            width: 38px;
+            height: 38px;
+            border: none;
+            background: #f2f3f5;
+            cursor: pointer;
+            font-size: 17px;
+            color: #6a7077;
+        }
+
+        .quantity-number {
+            width: 45px;
+            height: 38px;
+            border: 1px solid #e0e2e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .buy-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .add-bag {
+            height: 45px;
+            border: 1px solid #44a47d;
+            background: white;
+            color: #44a47d;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .checkout {
+            height: 45px;
+            border: none;
+            background: #45a57d;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .related {
+            padding: 100px 0 80px;
+        }
+
+        .section-heading {
+            font-size: 30px;
+            margin-bottom: 38px;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+        }
+
+        .related-image {
+            height: 300px;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .related-image > img {
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+        }
+
+        .small-badge {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 9px;
+            background: #f4c05c;
+            color: #9c701e;
+            padding: 5px 9px;
+            border-radius: 14px;
+        }
+
+        .related-info {
+            padding-top: 14px;
+        }
+
+        .related-info h3 {
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .related-info p {
+            font-size: 11px;
+            color: #777c84;
+            margin-bottom: 12px;
+        }
+
+        .related-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .related-price strong {
+            font-size: 23px;
+        }
+
+        .related-price span {
+            color: #9da2a9;
+            font-size: 11px;
+            margin-left: 6px;
+            text-decoration: line-through;
+        }
+
+        .related-cart img {
+            width: 38px;
+            height: 38px;
+        }
+
+        .detail-tabs {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            margin-bottom: 35px;
+        }
+
+        .detail-tab {
+            height: 45px;
+            border: none;
+            background: white;
+            color: #48a680;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .detail-tab.active {
+            background: #dff1e9;
+        }
+
+        .detail-tab:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 13px;
+            width: 1px;
+            height: 19px;
+            background: #dfe2e4;
+        }
+
+        .benefits {
+            padding: 15px 0 70px;
+        }
+
+        .benefits-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .benefits-text h2,
+        .ingredients h2,
+        .how-to h2,
+        .reviews h2,
+        .faq h2 {
+            font-size: 31px;
+            margin-bottom: 20px;
+        }
+
+        .benefits-text > p {
+            font-size: 12px;
+            color: #6e747b;
+            line-height: 1.6;
+            margin-bottom: 23px;
+        }
+
+        .benefit-item {
+            margin-bottom: 19px;
+        }
+
+        .benefit-item h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .benefit-item p {
+            font-size: 11px;
+            line-height: 1.55;
+            color: #70767d;
+        }
+
+        .benefits-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .ingredients {
+            padding: 15px 0 80px;
+        }
+
+        .ingredient-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 45px;
+        }
+
+        .ingredient-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .ingredient-card h3 {
+            font-size: 17px;
+            margin-bottom: 7px;
+        }
+
+        .ingredient-card p {
+            font-size: 11px;
+            line-height: 1.5;
+            color: #676e75;
+        }
+
+        .see-full-list {
+            display: block;
+            width: 150px;
+            height: 34px;
+            margin: 25px auto 0;
+            background: white;
+            border: 1px solid #49a57f;
+            color: #49a57f;
+            cursor: pointer;
+        }
+
+        .how-to {
+            padding-bottom: 90px;
+        }
+
+        .how-video {
+            height: 560px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .how-video > img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .watch-button {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            background: #20252e;
+            color: white;
+
+            padding: 13px 20px;
+
+            font-size: 12px;
+        }
+
+        .reviews {
+            background: #fafafa;
+            padding: 55px 0 60px;
+        }
+
+        .review-heading-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .write-review {
+            border: 1px solid #49a57f;
+            color: #49a57f;
+            background: white;
+            padding: 9px 14px;
+            font-size: 11px;
+        }
+
+        .review-content {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 65px;
+        }
+
+        .rating-number {
+            font-size: 34px;
+            font-weight: 700;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .review-count {
+            font-size: 11px;
+            color: #777c83;
+            margin-left: 8px;
+        }
+
+        .rating-bars {
+            margin-top: 20px;
+        }
+
+        .rating-row {
+            display: grid;
+            grid-template-columns: 15px 20px 1fr 30px;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 10px;
+            font-size: 10px;
+            color: #777d84;
+        }
+
+        .rating-row .star {
+            color: #f3bb22;
+        }
+
+        .bar {
+            height: 6px;
+            background: #e1e4e7;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: #f3bd28;
+        }
+
+        .review-item {
+            margin-bottom: 28px;
+        }
+
+        .review-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 7px;
+        }
+
+        .review-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #ead5c9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .review-user-info strong {
+            font-size: 12px;
+        }
+
+        .review-user-info span {
+            font-size: 10px;
+            color: #92979d;
+            margin-left: 5px;
+        }
+
+        .review-item .stars {
+            font-size: 11px;
+            margin-bottom: 7px;
+        }
+
+        .review-item p {
+            font-size: 11px;
+            line-height: 1.5;
+            color: #626970;
+        }
+
+        .review-pagination {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            font-size: 11px;
+            color: #80868c;
+        }
+
+        .review-pagination .active {
+            width: 27px;
+            height: 27px;
+            background: #e2f3eb;
+            color: #4ba67f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .faq {
+            padding: 55px 0 65px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 45px;
+        }
+
+        .faq-item {
+            min-height: 64px;
+            border: 1px solid #e1e3e6;
+            border-radius: 4px;
+            padding: 17px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            font-size: 12px;
+            color: #666c73;
+        }
+
+        .faq-item.active {
+            border-color: #6eb495;
+        }
+
+        .faq-item.active .faq-title {
+            color: #47a57e;
+        }
+
+        .faq-arrow {
+            color: #8d9399;
+            font-size: 20px;
+        }
+
+        .faq-answer {
+            margin-top: 8px;
+            font-size: 10px;
+            line-height: 1.5;
+            color: #767c82;
+        }
+
+        footer {
+            background: #1f252e;
+            color: white;
+            padding: 75px 0 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 150px 160px 220px 1fr;
+            gap: 40px;
+        }
+
+        .footer-col h3,
+        .newsletter h3 {
+            font-size: 16px;
+            margin-bottom: 22px;
+        }
+
+        .footer-col a,
+        .footer-col p {
+            display: block;
+            font-size: 11px;
+            margin-bottom: 16px;
+            color: #f0f1f3;
+        }
+
+        .footer-col strong {
+            display: block;
+            font-size: 11px;
+            margin-bottom: 20px;
+        }
+
+        .language {
+            width: 100px;
+            height: 33px;
+            border: 1px solid #838a94;
+            background: transparent;
+            color: white;
+            padding: 0 10px;
+        }
+
+        .language option {
+            color: black;
+        }
+
+        .newsletter > p {
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+
+        .subscribe {
+            max-width: 410px;
+            height: 42px;
+            display: flex;
+            border: 1px solid #727985;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .subscribe input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: white;
+            padding: 0 14px;
+        }
+
+        .subscribe input::placeholder {
+            color: #cdd1d6;
+        }
+
+        .subscribe button {
+            width: 105px;
+            border: none;
+            background: #49a57e;
+            color: white;
+        }
+
+        .socials {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .socials img {
+            width: 19px;
+            height: 19px;
+            object-fit: contain;
+        }
+
+        .social-placeholder {
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            background: #49a57e;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+        }
+
+        .copyright {
+            margin-top: 28px;
+            display: flex;
+            gap: 8px;
+            font-size: 10px;
+            color: #d7dbe0;
+        }
+
+        @media(max-width: 950px) {
+
+            .product-main {
+                grid-template-columns: 70px 1fr;
+            }
+
+            .product-info {
+                grid-column: 1 / -1;
+                padding-left: 0;
+            }
+
+            .related-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .benefits-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .ingredient-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .review-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 650px) {
+
+            .nav,
+            .search {
+                display: none;
+            }
+
+            .logo {
+                position: static;
+                transform: none;
+            }
+
+            .product-main {
+                grid-template-columns: 1fr;
+            }
+
+            .thumbnails {
+                flex-direction: row;
+            }
+
+            .thumb {
+                width: 60px;
+                height: 70px;
+            }
+
+            .main-product-image {
+                height: 350px;
+            }
+
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-tabs {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<header>
+
+    <div class="container header-container">
+
+        <nav class="nav">
+
+            <a href="#">Shop</a>
+            <a href="#">Offers</a>
+            <a href="#">Our story</a>
+            <a href="#">Blog</a>
+
+        </nav>
+
+
+        <a href="#" class="logo">
+
+            <img
+                src="Image 1 (13).png"
+                alt="Logo"
+            >
+
+        </a>
+
+
+        <div class="header-right">
+
+
+            <div class="search">
+
+                <span class="search-icon"></span>
+
+                <input
+                    type="text"
+                    placeholder="Search product..."
+                >
+
+            </div>
+
+
+            <a href="#" class="cart-text">
+
+                <span class="cart-symbol">🛒</span>
+
+                Cart (0)
+
+            </a>
+
+
+            <a href="#" class="user-icon">
+                ♟
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+<div class="container breadcrumb">
+
+    <a href="#">Home</a>
+
+    <span>›</span>
+
+    <a href="#">Shop</a>
+
+    <span>›</span>
+
+    <a href="#">Products type</a>
+
+    <span>›</span>
+
+    <span>Detail</span>
+
+</div>
+
+<section class="container product-main">
+
+    <div class="thumbnails">
+
+        <div class="thumb active">
+
+            <img
+                src="Image 1.png"
+                alt="Thumbnail"
+            >
+
+        </div>
+
+
+        <div class="thumb">
+
+            <img
+                src="Image 1 (1).png"
+                alt="Thumbnail"
+            >
+
+        </div>
+
+
+        <div class="thumb">
+
+            <img
+                src="Image 1 (2).png"
+                alt="Thumbnail"
+            >
+
+        </div>
+
+
+        <div class="thumb">
+
+            <img
+                src="Image 1 (3).png"
+                alt="Thumbnail"
+            >
+
+        </div>
+
+    </div>
+
+    <div class="main-product-image">
+
+        <img
+            src="Image 1 (4).png"
+            alt="Product"
+        >
+
+    </div>
+
+    <div class="product-info">
+
+        <span class="best-badge">
+            Best Seller
+        </span>
+
+
+        <h1>
+            Product name
+        </h1>
+
+
+        <p class="subtitle">
+            Aliquip fugiat ipsum nostrud ex et eu incididunt
+        </p>
+
+
+        <div class="price-line">
+
+            <span class="current-price">
+                $32
+            </span>
+
+            <span class="old-price">
+                $42
+            </span>
+
+        </div>
+
+
+        <p class="description">
+            In ullamco labore mollit et exercitation fugiat exercitation
+            minim ex sint ullamco exercitation amet officia mollit.
+            Qui cillum pariatur in con
+        </p>
+
+
+        <div class="review-line">
+
+            <strong>
+                368 reviews
+            </strong>
+
+            <span>
+                823 sold
+            </span>
+
+            <span class="stars">
+                ★★★★★
+            </span>
+
+            <strong>
+                4.5
+            </strong>
+
+        </div>
+
+
+
+        <div class="benefit-line">
+
+            <img
+                src="Check circle 1.png"
+                alt="Check"
+            >
+
+            <span>
+                Free shipping on orders over $49USD
+            </span>
+
+        </div>
+
+
+        <div class="benefit-line">
+
+            <img
+                src="Check circle 1 (1).png"
+                alt="Check"
+            >
+
+            <span>
+                Free + easy returns
+            </span>
+
+        </div>
+
+
+
+        <label class="label">
+            Choose size
+        </label>
+
+
+        <select class="size-select">
+
+            <option>
+                50.00 ML
+            </option>
+
+            <option>
+                100.00 ML
+            </option>
+
+        </select>
+
+
+
+        <label class="label">
+            Quantity
+        </label>
+
+
+        <div class="quantity-row">
+
+            <button class="quantity-btn">
+                −
+            </button>
+
+
+            <div class="quantity-number">
+                1
+            </div>
+
+
+            <button class="quantity-btn">
+                +
+            </button>
+
+        </div>
+
+
+
+        <div class="buy-buttons">
+
+            <button class="add-bag">
+                🛒 &nbsp; Add to bag
+            </button>
+
+            <button class="checkout">
+                Checkout
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="related">
+
+    <div class="container">
+
+        <h2 class="section-heading">
+            Related products
+        </h2>
+
+
+        <div class="related-grid">
+
+            <div class="related-card">
+
+                <div class="related-image">
+
+                    <img
+                        src="Image 1 (5).png"
+                        alt="Product"
+                    >
+
+                </div>
+
+                <div class="related-info">
+
+                    <h3>
+                        Product title
+                    </h3>
+
+                    <p>
+                        Labore sint ipsum dolore mollit
+                    </p>
+
+                    <div class="related-bottom">
+
+                        <div class="related-price">
+
+                            <strong>$32</strong>
+
+                            <span>$42</span>
+
+                        </div>
+
+                        <a href="#" class="related-cart">
+
+                            <img
+                                src="Button 1 (2).png"
+                                alt="Cart"
+                            >
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="related-card">
+
+                <div class="related-image">
+
+                    <span class="small-badge">
+                        Best seller
+                    </span>
+
+                    <img
+                        src="Image 1 (6).png"
+                        alt="Product"
+                    >
+
+                </div>
+
+                <div class="related-info">
+
+                    <h3>
+                        Product title
+                    </h3>
+
+                    <p>
+                        Labore sint ipsum dolore mollit
+                    </p>
+
+                    <div class="related-bottom">
+
+                        <div class="related-price">
+
+                            <strong>$22</strong>
+
+                            <span>$28</span>
+
+                        </div>
+
+                        <a href="#" class="related-cart">
+
+                            <img
+                                src="Button 1 (2).png"
+                                alt="Cart"
+                            >
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="related-card">
+
+                <div class="related-image">
+
+                    <span class="small-badge">
+                        Best seller
+                    </span>
+
+                    <img
+                        src="Image 1 (7).png"
+                        alt="Product"
+                    >
+
+                </div>
+
+                <div class="related-info">
+
+                    <h3>
+                        Product title
+                    </h3>
+
+                    <p>
+                        Labore sint ipsum dolore mollit
+                    </p>
+
+                    <div class="related-bottom">
+
+                        <div class="related-price">
+
+                            <strong>$48</strong>
+
+                            <span>$56</span>
+
+                        </div>
+
+                        <a href="#" class="related-cart">
+
+                            <img
+                                src="Button 1 (2).png"
+                                alt="Cart"
+                            >
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="related-card">
+
+                <div class="related-image">
+
+                    <span class="small-badge">
+                        Best seller
+                    </span>
+
+                    <img
+                        src="Image 1 (8).png"
+                        alt="Product"
+                    >
+
+                </div>
+
+                <div class="related-info">
+
+                    <h3>
+                        Product title
+                    </h3>
+
+                    <p>
+                        Labore sint ipsum dolore mollit
+                    </p>
+
+                    <div class="related-bottom">
+
+                        <div class="related-price">
+
+                            <strong>$18</strong>
+
+                            <span>$26</span>
+
+                        </div>
+
+                        <a href="#" class="related-cart">
+
+                            <img
+                                src="Button 1 (2).png"
+                                alt="Cart"
+                            >
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="container detail-tabs">
+
+    <button class="detail-tab active">
+        Benefits
+    </button>
+
+    <button class="detail-tab">
+        Ingredients
+    </button>
+
+    <button class="detail-tab">
+        How to use
+    </button>
+
+    <button class="detail-tab">
+        Reviews
+    </button>
+
+    <button class="detail-tab">
+        FAQs
+    </button>
+
+</div>
+
+<section class="benefits">
+
+    <div class="container benefits-layout">
+
+
+        <div class="benefits-text">
+
+            <h2>
+                Benefits
+            </h2>
+
+
+            <p>
+                Consectetur excepteur elit ullamco incididunt voluptate tempor
+                exercitation. Lorem commodo ullamco quis velit officia aute
+                laboris nisi sit exercitation ut esse pariatur occaecat quis
+            </p>
+
+
+
+            <div class="benefit-item">
+
+                <h3>
+                    Laboris consequat ad
+                </h3>
+
+                <p>
+                    Consectetur excepteur elit ullamco incididunt voluptate
+                    tempor exercitation. Lorem commodo ullamco quis velit
+                    officia aute laboris elit
+                </p>
+
+            </div>
+
+
+
+            <div class="benefit-item">
+
+                <h3>
+                    Duis duis do labore pariatur
+                </h3>
+
+                <p>
+                    Ad qui aliqua nulla nostrud consectetur laboris nostrud
+                    commodo voluptate. Lorem id qui laborum aute voluptate
+                </p>
+
+            </div>
+
+
+
+            <div class="benefit-item">
+
+                <h3>
+                    Deserunt ex
+                </h3>
+
+                <p>
+                    Cupidatat culpa id do laboris nisi aliqua eu. Veniam aliqua
+                    duis Lorem adipisicing et minim velit quis
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="benefits-image">
+
+            <img
+                src="Image 1 (9).png"
+                alt="Benefits"
+            >
+
+        </div>
+
+
+    </div>
+
+</section>
+
+<section class="ingredients">
+
+    <div class="container">
+
+        <h2>
+            Ingredients
+        </h2>
+
+
+        <div class="ingredient-grid">
+
+
+            <div class="ingredient-card">
+
+                <img
+                    src="Image 1 (10).png"
+                    alt="Hyaluronic acid"
+                >
+
+                <h3>
+                    Hyaluronic acid
+                </h3>
+
+                <p>
+                    Elit do sit excepteur duis labore nisi sit anim
+                    adipisicing duis incididunt sit anim sunt est.
+                </p>
+
+            </div>
+
+
+
+            <div class="ingredient-card">
+
+                <img
+                    src="Image 1 (11).png"
+                    alt="Green tea"
+                >
+
+                <h3>
+                    Green tea
+                </h3>
+
+                <p>
+                    Tempor adipisicing aute pariatur magna enim Lorem
+                    voluptate incididunt culpa ex veniam sunt occaecat tempor.
+                </p>
+
+            </div>
+
+
+
+            <div class="ingredient-card">
+
+                <img
+                    src="Image 1 (12).png"
+                    alt="Olive oil"
+                >
+
+                <h3>
+                    Olive oil
+                </h3>
+
+                <p>
+                    Cupidatat culpa id do laboris nisi aliqua eu.
+                    Veniam aliqua duis Lorem adipisicing et minim velit quis.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <button class="see-full-list">
+            See full list
+        </button>
+
+    </div>
+
+</section>
+
+<section class="how-to">
+
+    <div class="container">
+
+        <h2>
+            How to use
+        </h2>
+
+
+        <div class="how-video">
+
+            <img
+                src="Image 1 (14).png"
+                alt="How to use"
+            >
+
+
+            <a href="#" class="watch-button">
+
+                Watch video &nbsp; ▶
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="reviews">
+
+    <div class="container">
+
+
+        <div class="review-heading-row">
+
+            <h2>
+                Reviews
+            </h2>
+
+            <button class="write-review">
+                ✎ Write a review
+            </button>
+
+        </div>
+
+
+
+        <div class="review-content">
+
+
+            <div>
+
+                <div>
+
+                    <span class="rating-number">
+                        4.5
+                    </span>
+
+                    <span class="stars">
+                        ★★★★★
+                    </span>
+
+                    <span class="review-count">
+                        368 Reviews
+                    </span>
+
+                </div>
+
+
+
+                <div class="rating-bars">
+
+
+                    <div class="rating-row">
+
+                        <span>5</span>
+                        <span class="star">★</span>
+
+                        <div class="bar">
+                            <div class="bar-fill" style="width: 80%;"></div>
+                        </div>
+
+                        <span>80%</span>
+
+                    </div>
+
+
+                    <div class="rating-row">
+
+                        <span>4</span>
+                        <span class="star">★</span>
+
+                        <div class="bar">
+                            <div class="bar-fill" style="width: 25%;"></div>
+                        </div>
+
+                        <span>25%</span>
+
+                    </div>
+
+
+                    <div class="rating-row">
+
+                        <span>3</span>
+                        <span class="star">★</span>
+
+                        <div class="bar">
+                            <div class="bar-fill" style="width: 10%;"></div>
+                        </div>
+
+                        <span>10%</span>
+
+                    </div>
+
+
+                    <div class="rating-row">
+
+                        <span>2</span>
+                        <span class="star">★</span>
+
+                        <div class="bar">
+                            <div class="bar-fill" style="width: 5%;"></div>
+                        </div>
+
+                        <span>5%</span>
+
+                    </div>
+
+
+                    <div class="rating-row">
+
+                        <span>1</span>
+                        <span class="star">★</span>
+
+                        <div class="bar">
+                            <div class="bar-fill" style="width: 0%;"></div>
+                        </div>
+
+                        <span>0%</span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+
+                <div class="review-item">
+
+                    <div class="review-user">
+
+                        <div class="review-avatar">
+                            👩
+                        </div>
+
+                        <div class="review-user-info">
+
+                            <strong>
+                                Annie Haley
+                            </strong>
+
+                            <span>
+                                3d ago
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stars">
+                        ★★★★★
+                    </div>
+
+                    <p>
+                        Commodo consequat quis nisi dolor laboris in aute
+                        occaecat quis consequat culpa consectetur aliqua.
+                    </p>
+
+                </div>
+
+
+
+                <div class="review-item">
+
+                    <div class="review-user">
+
+                        <div class="review-avatar">
+                            👩
+                        </div>
+
+                        <div class="review-user-info">
+
+                            <strong>
+                                Green William
+                            </strong>
+
+                            <span>
+                                3d ago
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stars">
+                        ★★★★★
+                    </div>
+
+                    <p>
+                        Consectetur tempor nulla veniam duis nostrud non.
+                        Non qui minim Lorem adipisicing qui veniam commodo.
+                    </p>
+
+                </div>
+
+
+
+                <div class="review-item">
+
+                    <div class="review-user">
+
+                        <div class="review-avatar">
+                            👨
+                        </div>
+
+                        <div class="review-user-info">
+
+                            <strong>
+                                James Rowe
+                            </strong>
+
+                            <span>
+                                3d ago
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stars">
+                        ★★★★★
+                    </div>
+
+                    <p>
+                        Ullamco enim ut culpa irure non qui est duis
+                        et aute proident reprehenderit tempor mollit.
+                    </p>
+
+                </div>
+
+
+
+                <div class="review-pagination">
+
+                    <span>‹</span>
+
+                    <span>1</span>
+
+                    <span class="active">
+                        2
+                    </span>
+
+                    <span>3</span>
+
+                    <span>4</span>
+
+                    <span>...</span>
+
+                    <span>10</span>
+
+                    <span>11</span>
+
+                    <span>›</span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="faq">
+
+    <div class="container">
+
+        <h2>
+            FAQs
+        </h2>
+
+
+        <div class="faq-grid">
+
+
+            <div class="faq-item active">
+
+                <div>
+
+                    <strong class="faq-title">
+                        Nisi nisi magna nostrud non consequat conse ?
+                    </strong>
+
+                    <p class="faq-answer">
+                        Ullamco enim ut culpa irure non qui est duis et aute
+                        proident reprehenderit tempor mollit.
+                    </p>
+
+                </div>
+
+                <span class="faq-arrow">
+                    ⌄
+                </span>
+
+            </div>
+
+
+
+            <div class="faq-item">
+
+                <span>
+                    Nostrud eiusmod exercitation duis ?
+                </span>
+
+                <span class="faq-arrow">
+                    ›
+                </span>
+
+            </div>
+
+
+
+            <div class="faq-item">
+
+                <span>
+                    Nostrud eiusmod exercitation duis reprehenderit
+                    laboris ullamco. Magna culpa cillum ?
+                </span>
+
+                <span class="faq-arrow">
+                    ›
+                </span>
+
+            </div>
+
+
+
+            <div class="faq-item">
+
+                <span>
+                    Velit duis ipsum sint consectetur id sint Lorem
+                    minim fugiat ?
+                </span>
+
+                <span class="faq-arrow">
+                    ›
+                </span>
+
+            </div>
+
+
+
+            <div class="faq-item">
+
+                <span>
+                    Fugiat pariatur minim eiusmod aute adipisicing
+                    aliqua occaecat ?
+                </span>
+
+                <span class="faq-arrow">
+                    ›
+                </span>
+
+            </div>
+
+
+
+            <div class="faq-item">
+
+                <span>
+                    Deserunt consequat esse occaecat anim sunt quis
+                    mollit officia adipisicing incididunt ?
+                </span>
+
+                <span class="faq-arrow">
+                    ›
+                </span>
+
+            </div>
+
+
+
+            <div class="faq-item">
+
+                <span>
+                    Aliquip irure mollit deserunt ipsum sit sunt
+                    veniam ?
+                </span>
+
+                <span class="faq-arrow">
+                    ›
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <div class="container footer-grid">
+
+
+        <div class="footer-col">
+
+            <h3>
+                About
+            </h3>
+
+            <a href="#">
+                Home
+            </a>
+
+            <a href="#">
+                Shop
+            </a>
+
+            <a href="#">
+                Our story
+            </a>
+
+            <a href="#">
+                Blogs
+            </a>
+
+
+            <select class="language">
+
+                <option>
+                    English
+                </option>
+
+                <option>
+                    Vietnamese
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="footer-col">
+
+            <h3>
+                Help
+            </h3>
+
+            <a href="#">
+                Shipping & Returns
+            </a>
+
+            <a href="#">
+                Track Order
+            </a>
+
+            <a href="#">
+                FAQs
+            </a>
+
+        </div>
+
+
+
+        <div class="footer-col">
+
+            <h3>
+                Contact
+            </h3>
+
+            <p>
+                Phone:
+            </p>
+
+            <strong>
+                (+1) 123 456 7893
+            </strong>
+
+            <p>
+                Email:
+            </p>
+
+            <strong>
+                name@email.com
+            </strong>
+
+        </div>
+
+
+
+        <div class="newsletter">
+
+            <h3>
+                Receive new promotions
+            </h3>
+
+            <p>
+                Duis ea tempor commodo amet reprehende
+            </p>
+
+
+            <div class="subscribe">
+
+                <input
+                    type="email"
+                    placeholder="✉  Input your email"
+                >
+
+                <button>
+                    Subscribe
+                </button>
+
+            </div>
+
+
+
+            <div class="socials">
+
+                <span class="social-placeholder">
+                    t
+                </span>
+
+                <img
+                    src="Facebook 1.png"
+                    alt="Facebook"
+                >
+
+                <span class="social-placeholder">
+                    in
+                </span>
+
+                <span class="social-placeholder">
+                    ▶
+                </span>
+
+            </div>
+
+
+
+            <div class="copyright">
+
+                <span>
+                    © 2022 Brand, Inc.
+                </span>
+
+                <span>•</span>
+
+                <span>Privacy</span>
+
+                <span>•</span>
+
+                <span>Terms</span>
+
+                <span>•</span>
+
+                <span>Sitemap</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>
