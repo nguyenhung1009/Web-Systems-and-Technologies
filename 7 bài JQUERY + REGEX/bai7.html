@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 7</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+    <h2>Ngày dạng dd/mm/yyyy</h2>
+    <p>Chỉ kiểm tra khuôn dạng, chưa kiểm tra ngày có hợp lệ hay không.</p>
+
+    <input type="text" id="txt" placeholder="Ví dụ: 14/10/2026">
+    <button id="btn">Kiểm tra</button>
+    <p id="result"></p>
+
+    <script>
+        $(document).ready(function() {
+            let pattern = /^\d{2}\/\d{2}\/\d{4}$/;
+
+            $("#btn").on("click", function() {
+                let chuoi = $("#txt").val();
+
+                if (pattern.test(chuoi)) {
+                    $("#result").text("ĐÚNG pattern").css("color", "green");
+                } else {
+                    $("#result").text("SAI pattern").css("color", "red");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
