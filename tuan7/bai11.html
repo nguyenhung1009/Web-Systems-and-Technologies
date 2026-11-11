@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 11</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Lọc bảng sinh viên</h2>
+    <input type="text" id="tim" placeholder="Nhập nội dung cần tìm">
+    <label><input type="checkbox" id="regex"> Dùng Regex</label>
+    <p id="loi" style="color:red"></p>
+    <table border="1" cellpadding="5">
+        <tr><th>Mã SV</th><th>Họ tên</th><th>Lớp</th><th>Email</th></tr>
+        <tr><td>SV001</td><td>Nguyễn An</td><td>CNTT1</td><td>an@mail.com</td></tr>
+        <tr><td>SV002</td><td>Trần Bình</td><td>CNTT2</td><td>binh@mail.com</td></tr>
+        <tr><td>SV003</td><td>Lê Chi</td><td>HTTT1</td><td>chi@mail.com</td></tr>
+        <tr><td>SV004</td><td>Phạm Dũng</td><td>CNTT1</td><td>dung@mail.com</td></tr>
+        <tr><td>SV005</td><td>Võ Hà</td><td>HTTT2</td><td>ha@mail.com</td></tr>
+    </table>
+
+    <script>
+    $(document).ready(function() {
+        function loc() {
+            let s = $("#tim").val(), re;
+
+            try {
+                re = new RegExp($("#regex").prop("checked") ? s : s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+            } catch (e) {
+                $("#loi").text("Regex không hợp lệ");
+                return;
+            }
+
+            $("#loi").text("");
+            $("table tr:gt(0)").each(function() {
+                $(this).toggle(s == "" || re.test($(this).text()));
+            });
+        }
+
+        $("#tim").on("input", loc);
+        $("#regex").on("change", loc);
+    });
+    </script>
+</body>
+</html>

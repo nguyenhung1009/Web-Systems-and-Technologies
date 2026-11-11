@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 15</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Form đăng ký</h2>
+    <form id="form">
+        <p>Mã SV: <input id="masv"></p><p id="e1"></p>
+        <p>Họ tên: <input id="hoten"></p><p id="e2"></p>
+        <p>Email: <input id="email"></p><p id="e3"></p>
+        <p>Số điện thoại: <input id="sdt"></p><p id="e4"></p>
+        <p>Mật khẩu: <input type="password" id="mk"></p><p id="e5"></p>
+        <p>Nhập lại mật khẩu: <input type="password" id="mk2"></p><p id="e6"></p>
+        <button id="dangky" disabled>Đăng ký</button>
+    </form>
+    <p id="kq"></p>
+
+    <script>
+    $(document).ready(function() {
+        function kiemTra() {
+            let a = /^\d{10}$/.test($("#masv").val());
+            let b = $("#hoten").val().trim() != "";
+            let c = /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test($("#email").val());
+            let d = /^0[35789]\d{8}$/.test($("#sdt").val().replace(/\D/g, ""));
+            let p = $("#mk").val();
+            let e = p.length >= 8 && /[a-z]/.test(p) && /[A-Z]/.test(p) && /\d/.test(p) && /[^A-Za-z0-9]/.test(p);
+            let f = p != "" && p == $("#mk2").val();
+
+            $("#e1").text(a ? "" : "Mã SV phải có 10 chữ số");
+            $("#e2").text(b ? "" : "Nhập họ tên");
+            $("#e3").text(c ? "" : "Email không hợp lệ");
+            $("#e4").text(d ? "" : "Số điện thoại không hợp lệ");
+            $("#e5").text(e ? "" : "Mật khẩu chưa đủ 5 tiêu chí");
+            $("#e6").text(f ? "" : "Mật khẩu không trùng");
+            $("#dangky").prop("disabled", !(a && b && c && d && e && f));
+        }
+
+        $("#form").on("input", "input", function() {
+            if (this.id == "masv") $(this).val($(this).val().replace(/\D/g, ""));
+            if (this.id == "sdt") $(this).val($(this).val().replace(/\D/g, "").slice(0, 10));
+            kiemTra();
+        });
+
+        $("#hoten").on("blur", function() {
+            let s = $(this).val().toLowerCase().trim().replace(/\s+/g, " ");
+            $(this).val(s.replace(/(^|\s)\p{L}/gu, c => c.toLocaleUpperCase("vi")));
+            kiemTra();
+        });
+
+        $("#form").on("submit", function(e) {
+            e.preventDefault();
+            kiemTra();
+            if ($("#dangky").prop("disabled")) return;
+            $("#kq").text("Đăng ký thành công: " + $("#hoten").val());
+            this.reset();
+            kiemTra();
+        });
+    });
+    </script>
+</body>
+</html>

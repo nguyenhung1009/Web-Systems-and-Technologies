@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 9</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Tô sáng từ khóa</h2>
+    <label>Từ khóa:</label>
+    <input type="text" id="tk">
+    <p id="dem">Tìm thấy 0 kết quả</p>
+    <p id="vanban">jQuery và Regex rất hữu ích. Học jQuery, Regex, a+b, (x) và c++.</p>
+
+    <script>
+    $(document).ready(function() {
+        let goc = $("#vanban").text();
+
+        $("#tk").on("input", function() {
+            let tk = $(this).val();
+            if (tk == "") {
+                $("#vanban").text(goc);
+                $("#dem").text("Tìm thấy 0 kết quả");
+                return;
+            }
+
+            let anToan = tk.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            let re = new RegExp("(" + anToan + ")", "gi");
+            let kq = goc.match(new RegExp(anToan, "gi")) || [];
+            $("#vanban").html(goc.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(re, "<mark>$1</mark>"));
+            $("#dem").text("Tìm thấy " + kq.length + " kết quả");
+        });
+    });
+    </script>
+</body>
+</html>

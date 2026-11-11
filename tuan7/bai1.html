@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 1</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Kiểm tra mã sinh viên</h2>
+    <label>Mã sinh viên:</label>
+    <input type="text" id="masv">
+    <p id="kq"></p>
+
+    <script>
+    $(document).ready(function() {
+        $("#masv").on("input", function() {
+            let s = $(this).val();
+
+            if (s == "") {
+                $("#kq").text("");
+            } else if (/^\d{10}$/.test(s)) {
+                $("#kq").text("✓ Hợp lệ").css("color", "green");
+            } else {
+                $("#kq").text("Mã SV gồm đúng 10 chữ số").css("color", "red");
+            }
+        });
+    });
+    </script>
+</body>
+</html>

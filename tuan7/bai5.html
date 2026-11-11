@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 5</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Định dạng tiền và tính tổng</h2>
+    <label>Tiền sách:</label>
+    <input type="text" id="sach">
+
+    <label>Phí ship:</label>
+    <input type="text" id="ship">
+
+    <p>Tổng cộng: <span id="tong">0</span> đ</p>
+
+    <script>
+    $(document).ready(function() {
+        $("#sach, #ship").on("input", function() {
+            let s = $(this).val().replace(/\D/g, "");
+            $(this).val(s.replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+
+            let a = Number($("#sach").val().replace(/\./g, "")) || 0;
+            let b = Number($("#ship").val().replace(/\./g, "")) || 0;
+            $("#tong").text((a + b).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+        });
+    });
+    </script>
+</body>
+</html>

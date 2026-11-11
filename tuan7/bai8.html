@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 8</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Độ mạnh mật khẩu</h2>
+    <label>Mật khẩu:</label>
+    <input type="password" id="mk">
+    <button type="button" id="xem">👁</button>
+    <ul id="ds">
+        <li>Ít nhất 8 ký tự</li>
+        <li>Có chữ thường</li>
+        <li>Có chữ hoa</li>
+        <li>Có chữ số</li>
+        <li>Có ký tự đặc biệt</li>
+    </ul>
+    <progress id="thanh" value="0" max="5"></progress>
+    <p id="kq"></p>
+
+    <script>
+    $(document).ready(function() {
+        $("#mk").on("input", function() {
+            let s = $(this).val();
+            let dk = [s.length >= 8, /[a-z]/.test(s), /[A-Z]/.test(s), /\d/.test(s), /[^A-Za-z0-9]/.test(s)];
+            let dem = 0;
+
+            $("#ds li").each(function(i) {
+                $(this).text((dk[i] ? "✅ " : "❌ ") + ["Ít nhất 8 ký tự", "Có chữ thường", "Có chữ hoa", "Có chữ số", "Có ký tự đặc biệt"][i]);
+                if (dk[i]) dem++;
+            });
+
+            $("#thanh").val(dem);
+            $("#kq").text(dem <= 2 ? "Yếu" : dem <= 4 ? "Trung bình" : "Mạnh");
+        });
+
+        $("#xem").on("click", function() {
+            $("#mk").attr("type", $("#mk").attr("type") == "password" ? "text" : "password");
+        });
+    });
+    </script>
+</body>
+</html>

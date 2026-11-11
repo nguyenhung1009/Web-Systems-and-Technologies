@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 13</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Tạo slug</h2>
+    <label>Tiêu đề bài viết:</label>
+    <input type="text" id="tieude">
+    <p>Slug: <span id="slug"></span></p>
+    <button id="copy">Sao chép</button>
+
+    <script>
+    $(document).ready(function() {
+        $("#tieude").on("input", function() {
+            let s = $(this).val().toLowerCase().replace(/đ/g, "d");
+            s = s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            s = s.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+            $("#slug").text(s);
+        });
+
+        $("#copy").on("click", function() {
+            navigator.clipboard.writeText($("#slug").text());
+        });
+    });
+    </script>
+</body>
+</html>

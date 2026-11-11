@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 12</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Che thông tin nhạy cảm</h2>
+    <textarea id="noidung" rows="4" cols="55">Email tien.nguyen@gmail.com, số điện thoại 0912345678, mã SV 20511200011.</textarea>
+    <br><button id="an">Ẩn thông tin</button>
+
+    <script>
+    $(document).ready(function() {
+        let goc = $("#noidung").val(), an = false;
+
+        $("#an").on("click", function() {
+            if (!an) {
+                let s = goc.replace(/\b([A-Za-z0-9._%+-])[A-Za-z0-9._%+-]*(@[A-Za-z0-9.-]+\.[A-Za-z]{2,})\b/g, "$1***$2");
+                s = s.replace(/(?<!\d)(0\d{2})\d{4}(\d{3})(?!\d)/g, "$1****$2");
+                $("#noidung").val(s);
+                $(this).text("Hiện lại");
+            } else {
+                $("#noidung").val(goc);
+                $(this).text("Ẩn thông tin");
+            }
+            an = !an;
+        });
+    });
+    </script>
+</body>
+</html>

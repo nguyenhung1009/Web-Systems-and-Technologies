@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 6</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Định dạng số điện thoại</h2>
+    <label>Số điện thoại:</label>
+    <input type="text" id="sdt">
+    <p id="kq"></p>
+
+    <script>
+    $(document).ready(function() {
+        $("#sdt").on("input", function() {
+            let s = $(this).val().replace(/\D/g, "").slice(0, 10);
+
+            if (s.length > 7) {
+                s = s.slice(0, 4) + " " + s.slice(4, 7) + " " + s.slice(7);
+            } else if (s.length > 4) {
+                s = s.slice(0, 4) + " " + s.slice(4);
+            }
+
+            $(this).val(s);
+            let so = s.replace(/\s/g, "");
+
+            if (so.length == 10 && /^0[35789]\d{8}$/.test(so)) {
+                $(this).css("border", "2px solid green");
+                $("#kq").text("Hợp lệ");
+            } else if (so.length == 10) {
+                $(this).css("border", "2px solid red");
+                $("#kq").text("Không hợp lệ");
+            } else {
+                $(this).css("border", "");
+                $("#kq").text("");
+            }
+        });
+    });
+    </script>
+</body>
+</html>

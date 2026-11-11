@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 14</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Phân tích đơn hàng</h2>
+    <textarea id="donhang" rows="6" cols="50">Đắc Nhân Tâm x 2 - 120.000đ
+Nhà Giả Kim x1 - 89.000đ
+dòng lỗi này
+Tư Duy Nhanh và Chậm x 3 - 150.000đ</textarea>
+    <br><button id="phanTich">Phân tích</button>
+    <div id="kq"></div>
+
+    <script>
+    $(document).ready(function() {
+        $("#phanTich").on("click", function() {
+            let dong = $("#donhang").val().split("\n");
+            let html = "<table border='1' cellpadding='5'><tr><th>STT</th><th>Tên</th><th>SL</th><th>Đơn giá</th><th>Thành tiền</th></tr>";
+            let loi = [], tong = 0, stt = 0;
+
+            dong.forEach(function(s, i) {
+                let m = /^\s*(.+?)\s+x\s*(\d+)\s*-\s*([\d.]+)\s*đ?\s*$/i.exec(s);
+                if (!m) {
+                    if (s.trim() != "") loi.push("Dòng " + (i + 1) + ": " + s);
+                } else {
+                    let sl = Number(m[2]), gia = Number(m[3].replace(/\./g, ""));
+                    let tien = sl * gia;
+                    tong += tien; stt++;
+                    html += "<tr><td>" + stt + "</td><td>" + m[1] + "</td><td>" + sl + "</td><td>" +
+                        gia.toLocaleString("de-DE") + "</td><td>" + tien.toLocaleString("de-DE") + "</td></tr>";
+                }
+            });
+
+            html += "<tr><th colspan='4'>Tổng cộng</th><th>" + tong.toLocaleString("de-DE") + "</th></tr></table>";
+            html += "<h3>Dòng lỗi</h3><p>" + (loi.length ? loi.join("<br>") : "Không có") + "</p>";
+            $("#kq").html(html);
+        });
+    });
+    </script>
+</body>
+</html>

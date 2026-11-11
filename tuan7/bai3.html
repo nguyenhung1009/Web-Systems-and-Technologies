@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 3</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Kiểm tra điện thoại và email</h2>
+    <label>Số điện thoại:</label>
+    <input type="text" id="sdt">
+    <p id="loi1"></p>
+
+    <label>Email:</label>
+    <input type="text" id="email">
+    <p id="loi2"></p>
+
+    <button id="gui" disabled>Gửi</button>
+
+    <script>
+    $(document).ready(function() {
+        function kiemTra() {
+            let sdt = /^(0|\+84)[35789]\d{8}$/.test($("#sdt").val());
+            let email = /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test($("#email").val());
+
+            $("#gui").prop("disabled", !(sdt && email));
+        }
+
+        $("#sdt").on("blur", function() {
+            let ok = /^(0|\+84)[35789]\d{8}$/.test($(this).val());
+            $("#loi1").text(ok ? "" : "Số điện thoại không hợp lệ");
+            kiemTra();
+        });
+
+        $("#email").on("blur", function() {
+            let ok = /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test($(this).val());
+            $("#loi2").text(ok ? "" : "Email không hợp lệ");
+            kiemTra();
+        });
+
+        $("#sdt, #email").on("input", kiemTra);
+    });
+    </script>
+</body>
+</html>

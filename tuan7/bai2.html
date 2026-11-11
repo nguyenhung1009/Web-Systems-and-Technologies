@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 2</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Bài 2 - Chỉ nhập số</h2>
+    <label>Số lượng:</label>
+    <input type="text" id="sl">
+    <p id="kq"></p>
+
+    <script>
+    $(document).ready(function() {
+        $("#sl").on("input", function() {
+            let cu = $(this).val();
+            let moi = cu.replace(/\D/g, "");
+            let dem = cu.length - moi.length;
+
+            $(this).val(moi);
+            $("#kq").text(dem > 0 ? "Đã loại bỏ " + dem + " ký tự không hợp lệ" : "");
+        });
+    });
+    </script>
+</body>
+</html>

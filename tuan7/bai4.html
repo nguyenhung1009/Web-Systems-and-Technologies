@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 4</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Chuẩn hóa họ tên</h2>
+    <label>Họ tên:</label>
+    <input type="text" id="hoten">
+
+    <script>
+    $(document).ready(function() {
+        $("#hoten").on("blur", function() {
+            let s = $(this).val().toLowerCase().trim().replace(/\s+/g, " ");
+            s = s.replace(/(^|\s)\p{L}/gu, c => c.toLocaleUpperCase("vi"));
+            $(this).val(s);
+        });
+    });
+    </script>
+</body>
+</html>

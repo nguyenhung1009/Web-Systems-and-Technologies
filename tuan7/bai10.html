@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 10</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Trích xuất thông tin</h2>
+    <textarea id="text" rows="5" cols="50">Liên hệ a.b@mail.com, c_d@x.edu.vn hoặc 0912 345 678, +84 987654321. #jQuery #Regex_2026</textarea>
+    <br><button id="tach">Trích xuất</button>
+    <div id="kq"></div>
+
+    <script>
+    $(document).ready(function() {
+        $("#tach").on("click", function() {
+            let s = $("#text").val();
+            let email = [...new Set(s.match(/[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}/g) || [])];
+            let sdt = [...new Set(s.match(/(?:\+84|0)[35789](?:[ .-]?\d){8}/g) || [])];
+            let hashtag = [...new Set(s.match(/#[\p{L}\d_]+/gu) || [])];
+
+            $("#kq").html("<h3>Email (" + email.length + ")</h3><p>" + email.join(", ") +
+                "</p><h3>Số điện thoại (" + sdt.length + ")</h3><p>" + sdt.join(", ") +
+                "</p><h3>Hashtag (" + hashtag.length + ")</h3><p>" + hashtag.join(", ") + "</p>");
+        });
+    });
+    </script>
+</body>
+</html>
