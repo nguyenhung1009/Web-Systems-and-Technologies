@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Xóa sách</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Danh sách sách</h2>
+
+    <div id="book-list">
+        <div class="book">
+            <h3>Đắc Nhân Tâm</h3>
+            <p>Giá: 120.000đ</p>
+        </div>
+
+        <div class="book">
+            <h3>Nhà Giả Kim</h3>
+            <p>Giá: 89.000đ</p>
+        </div>
+
+        <div class="book">
+            <h3>Tư Duy Nhanh và Chậm</h3>
+            <p>Giá: 150.000đ</p>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            $(".book").append('<button class="btn-delete">❌ Xóa</button>');
+
+            $("#book-list").on("click", ".btn-delete", function() {
+                $(this).closest(".book").remove();
+            });
+        });
+    </script>
+</body>
+</html>

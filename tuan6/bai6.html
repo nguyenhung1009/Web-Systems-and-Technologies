@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore Online</title>
+
+    <!-- Thư viện jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            line-height: 1.6;
+        }
+
+        .book {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        input {
+            padding: 10px;
+            width: 250px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        #form-errors {
+            color: red;
+        }
+
+        #form-success {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Bookstore Online</h1>
+
+    <!-- GIỎ HÀNG -->
+    <h2>Giỏ hàng</h2>
+
+    <p>Số sách: <span id="cart-count">0</span></p>
+    <p>Tổng tiền: <span id="cart-total">0đ</span></p>
+
+    <hr>
+
+    <!-- DANH SÁCH SÁCH -->
+    <h2>Danh sách sách</h2>
+
+    <input
+        type="text"
+        id="search-box"
+        placeholder="Tìm tên sách..."
+    >
+
+    <div id="book-list"></div>
+
+    <hr>
+
+    <!-- FORM ĐẶT HÀNG -->
+    <h2>Thông tin đặt hàng</h2>
+
+    <form id="checkout-form" novalidate>
+
+        <input
+            type="text"
+            name="fullname"
+            placeholder="Họ tên"
+        >
+        <br>
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Email"
+        >
+        <br>
+
+        <input
+            type="tel"
+            name="phone"
+            placeholder="Số điện thoại"
+        >
+        <br>
+
+        <button type="submit">Đặt hàng</button>
+
+    </form>
+
+    <!-- THÔNG BÁO LỖI -->
+    <div id="form-errors"></div>
+
+    <!-- THÔNG BÁO THÀNH CÔNG -->
+    <p id="form-success"></p>
+
+    <script>
+        $(function() {
+
+            // =====================================
+            // 1. DANH SÁCH SÁCH
+            // =====================================
+
+            const books = [
+                {
+                    id: 1,
+                    title: "Đắc Nhân Tâm",
+                    price: 120000
+                },
+                {
+                    id: 2,
+                    title: "Nhà Giả Kim",
+                    price: 89000
+                },
+                {
+                    id: 3,
+                    title: "Tư Duy Nhanh và Chậm",
+                    price: 150000
+                }
+            ];
+
+            // Giỏ hàng ban đầu rỗng
+            let cart = [];
+
+
+            // =====================================
+            // 2. HIỂN THỊ DANH SÁCH SÁCH
+            // =====================================
+
+            function renderBookList() {
+
+                $("#book-list").empty();
+
+                books.forEach(function(book) {
+
+                    $("#book-list").append(`
+                        <div class="book" data-id="${book.id}">
+                            <h3>${book.title}</h3>
+
+                            <p>
+                                Giá:
+                                ${book.price.toLocaleString("vi-VN")}đ
+                            </p>
+
+                            <button class="btn-add">
+                                Thêm vào giỏ
+                            </button>
+                        </div>
+                    `);
+
+                });
+
+            }
+
+
+            // =====================================
+            // 3. CẬP NHẬT GIỎ HÀNG
+            // =====================================
+
+            function renderCart() {
+
+                const total = cart.reduce(function(sum, item) {
+                    return sum + item.price;
+                }, 0);
+
+                $("#cart-count").text(cart.length);
+
+                $("#cart-total").text(
+                    total.toLocaleString("vi-VN") + "đ"
+                );
+
+            }
+
+
+            // =====================================
+            // 4. THÊM SÁCH VÀO GIỎ
+            // =====================================
+
+            $("#book-list").on("click", ".btn-add", function() {
+
+                const bookId = Number(
+                    $(this).closest(".book").data("id")
+                );
+
+                const book = books.find(function(item) {
+                    return item.id === bookId;
+                });
+
+                if (book) {
+                    cart.push(book);
+                    renderCart();
+                }
+
+                // Thông báo đã thêm
+                $(this).text("Đã thêm ✓");
+
+                // Hiệu ứng jQuery
+                $(this)
+                    .stop(true, true)
+                    .animate({ opacity: 0.5 }, 150)
+                    .animate({ opacity: 1 }, 150);
+
+            });
+
+
+            // =====================================
+            // 5. TÌM KIẾM SÁCH
+            // =====================================
+
+            $("#search-box").on("input", function() {
+
+                const keyword = $(this)
+                    .val()
+                    .trim()
+                    .toLowerCase();
+
+                $(".book").each(function() {
+
+                    const title = $(this)
+                        .find("h3")
+                        .text()
+                        .toLowerCase();
+
+                    $(this).toggle(
+                        title.includes(keyword)
+                    );
+
+                });
+
+            });
+
+
+            // =====================================
+            // 6. KIỂM TRA FORM ĐẶT HÀNG
+            // =====================================
+
+            $("#checkout-form").on("submit", function(e) {
+
+                // Ngăn trình duyệt tải lại trang
+                e.preventDefault();
+
+                // Xóa thông báo cũ
+                $("#form-errors").empty();
+                $("#form-success").text("");
+
+                let errors = [];
+
+                // Lấy dữ liệu người dùng nhập
+                const fullname = $("input[name='fullname']")
+                    .val().trim();
+
+                const email = $("input[name='email']")
+                    .val().trim();
+
+                const phone = $("input[name='phone']")
+                    .val().trim();
+
+
+                // Kiểm tra giỏ hàng
+                if (cart.length === 0) {
+                    errors.push(
+                        "Vui lòng thêm sách vào giỏ hàng."
+                    );
+                }
+
+
+                // Kiểm tra họ tên
+                if (fullname === "") {
+                    errors.push(
+                        "Vui lòng nhập họ tên."
+                    );
+                }
+
+
+                // Kiểm tra Email bằng Regex
+                const emailRegex = /^\S+@\S+\.\S+$/;
+
+                if (!emailRegex.test(email)) {
+                    errors.push(
+                        "Email không hợp lệ."
+                    );
+                }
+
+
+                // Kiểm tra số điện thoại bằng Regex
+                const phoneRegex = /^0\d{9}$/;
+
+                if (!phoneRegex.test(phone)) {
+                    errors.push(
+                        "Số điện thoại phải gồm 10 chữ số và bắt đầu bằng 0."
+                    );
+                }
+
+
+                // =====================================
+                // 7. HIỂN THỊ LỖI
+                // =====================================
+
+                if (errors.length > 0) {
+
+                    errors.forEach(function(err) {
+
+                        $("<p>")
+                            .text("• " + err)
+                            .appendTo("#form-errors");
+
+                    });
+
+                    return;
+                }
+
+
+                // =====================================
+                // 8. ĐẶT HÀNG THÀNH CÔNG
+                // =====================================
+
+                $("#form-success").text(
+                    "Đặt hàng thành công!"
+                );
+
+                alert("Đặt hàng thành công!");
+
+                // Hiển thị thông tin trên Console
+                console.log("Sách đã đặt:", cart);
+                console.log("Họ tên:", fullname);
+                console.log("Email:", email);
+                console.log("Số điện thoại:", phone);
+
+                // Làm rỗng giỏ hàng
+                cart = [];
+
+                // Cập nhật lại giao diện
+                renderCart();
+                renderBookList();
+
+                // Xóa nội dung tìm kiếm
+                $("#search-box").val("");
+
+                // Reset form
+                this.reset();
+
+            });
+
+
+            // =====================================
+            // 9. KHỞI TẠO TRANG
+            // =====================================
+
+            renderBookList();
+            renderCart();
+
+        });
+    </script>
+
+</body>
+</html>

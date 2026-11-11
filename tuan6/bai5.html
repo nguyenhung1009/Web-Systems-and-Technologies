@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tải danh sách sản phẩm</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Danh sách sản phẩm</h2>
+
+    <p id="message">Đang tải dữ liệu...</p>
+    <div id="book-list"></div>
+
+    <script>
+        $(function() {
+            $.get("https://fakestoreapi.com/products", function(data) {
+                $("#message").text("");
+
+                data.forEach(function(product) {
+                    $("#book-list").append(`
+                        <div class="book">
+                            <h3>${product.title}</h3>
+                            <p>Giá: ${product.price} USD</p>
+                            <p>${product.description}</p>
+                        </div>
+                        <hr>
+                    `);
+                });
+            }).fail(function() {
+                $("#message").text("Không tải được dữ liệu. Vui lòng thử lại.");
+            });
+        });
+    </script>
+</body>
+</html>

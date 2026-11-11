@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Hiệu ứng giỏ hàng</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>Đắc Nhân Tâm</h2>
+    <p>Giá: 120.000đ</p>
+
+    <button id="btn-add-cart">Thêm vào giỏ hàng</button>
+
+    <p>Số sản phẩm trong giỏ: <span id="cart-count">0</span></p>
+
+    <script>
+        $(function() {
+            let count = 0;
+
+            $("#btn-add-cart").click(function() {
+                count++;
+                $("#cart-count").text(count);
+
+                $(this)
+                    .animate({ fontSize: "20px" }, 200)
+                    .animate({ fontSize: "16px" }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
