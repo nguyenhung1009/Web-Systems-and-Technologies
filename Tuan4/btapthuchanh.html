@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập thực hành JavaScript DOM</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: white;
+        }
+
+        .exercise {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin: 4px;
+            cursor: pointer;
+        }
+
+        input {
+            padding: 8px;
+        }
+
+        .box-toggle {
+            width: 150px;
+            height: 100px;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        .btn-delete {
+            color: red;
+            margin-left: 10px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>BÀI TẬP THỰC HÀNH JAVASCRIPT DOM</h1>
+
+    <!-- BÀI 1 -->
+    <div class="exercise">
+        <h3>1. Đổi màu chữ</h3>
+
+        <button id="btnRed">Màu đỏ</button>
+        <button id="btnBlue">Màu xanh dương</button>
+        <button id="btnGreen">Màu xanh lá</button>
+
+        <p id="paraColor">Đoạn văn bản mẫu để đổi màu.</p>
+    </div>
+
+    <!-- BÀI 2 -->
+    <div class="exercise">
+        <h3>2. Ẩn / Hiện phần tử</h3>
+
+        <button id="btnToggle">Ẩn / Hiện</button>
+
+        <div id="targetBox" class="box-toggle">
+            Khối Div
+        </div>
+    </div>
+
+    <!-- BÀI 3 -->
+    <div class="exercise">
+        <h3>3. Đếm số lần click</h3>
+
+        <button id="btnCount">Click vào đây</button>
+
+        <p>
+            Số lần đã click:
+            <span id="countDisplay">0</span>
+        </p>
+    </div>
+
+    <!-- BÀI 4 -->
+    <div class="exercise">
+        <h3>4. Thay đổi nội dung văn bản</h3>
+
+        <input
+            type="text"
+            id="inputContent"
+            placeholder="Nhập nội dung mới..."
+        >
+
+        <button id="btnUpdateContent">Cập nhật</button>
+
+        <p id="displayContent">Nội dung ban đầu...</p>
+    </div>
+
+    <!-- BÀI 5 -->
+    <div class="exercise">
+        <h3>5. Đổi màu nền trang</h3>
+
+        <button id="bgRed">Đỏ</button>
+        <button id="bgGreen">Xanh lá</button>
+        <button id="bgYellow">Vàng</button>
+        <button id="bgReset">Khôi phục</button>
+    </div>
+
+    <!-- BÀI 6 & 7 -->
+    <div class="exercise">
+        <h3>6 & 7. Thêm và xóa công việc</h3>
+
+        <input
+            type="text"
+            id="todoInput"
+            placeholder="Nhập công việc..."
+        >
+
+        <button id="btnAddTodo">Thêm</button>
+
+        <ul id="todoList"></ul>
+    </div>
+
+    <!-- BÀI 8 -->
+    <div class="exercise">
+        <h3>8. Kiểm tra độ dài chuỗi</h3>
+
+        <input
+            type="text"
+            id="textLengthInput"
+            placeholder="Nhập văn bản..."
+        >
+
+        <p>
+            Số ký tự đã nhập:
+            <span id="charCount">0</span>
+        </p>
+    </div>
+
+    <!-- BÀI 9 -->
+    <div class="exercise">
+        <h3>9. Đổi kiểu chữ khi hover</h3>
+
+        <p id="hoverPara">
+            Rê chuột vào đây để đổi kiểu chữ!
+        </p>
+    </div>
+
+    <!-- BÀI 10 -->
+    <div class="exercise">
+        <h3>10. Kiểm tra Form</h3>
+
+        <form id="myForm" novalidate>
+            <input
+                type="text"
+                id="username"
+                placeholder="Nhập tên người dùng..."
+            >
+
+            <button type="submit">Gửi</button>
+        </form>
+
+        <p id="formMessage"></p>
+    </div>
+
+    <script>
+
+        // BÀI 1: ĐỔI MÀU CHỮ
+        const paraColor = document.getElementById("paraColor");
+
+        document.getElementById("btnRed")
+            .addEventListener("click", function() {
+                paraColor.style.color = "red";
+            });
+
+        document.getElementById("btnBlue")
+            .addEventListener("click", function() {
+                paraColor.style.color = "blue";
+            });
+
+        document.getElementById("btnGreen")
+            .addEventListener("click", function() {
+                paraColor.style.color = "green";
+            });
+
+
+
+        // BÀI 2: ẨN / HIỆN PHẦN TỬ
+        const targetBox = document.getElementById("targetBox");
+
+        document.getElementById("btnToggle")
+            .addEventListener("click", function() {
+
+                if (targetBox.style.display === "none") {
+                    targetBox.style.display = "flex";
+                } else {
+                    targetBox.style.display = "none";
+                }
+
+            });
+
+
+        // BÀI 3: ĐẾM SỐ LẦN CLICK
+        let count = 0;
+
+        document.getElementById("btnCount")
+            .addEventListener("click", function() {
+
+                count++;
+
+                document.getElementById("countDisplay")
+                    .textContent = count;
+
+            });
+
+
+        // BÀI 4: THAY ĐỔI NỘI DUNG
+        document.getElementById("btnUpdateContent")
+            .addEventListener("click", function() {
+
+                const value = document
+                    .getElementById("inputContent")
+                    .value;
+
+                document.getElementById("displayContent")
+                    .textContent = value;
+
+            });
+
+
+
+        // BÀI 5: ĐỔI MÀU NỀN
+        document.getElementById("bgRed")
+            .addEventListener("click", function() {
+                document.body.style.backgroundColor = "#ffcccc";
+            });
+
+        document.getElementById("bgGreen")
+            .addEventListener("click", function() {
+                document.body.style.backgroundColor = "#ccffcc";
+            });
+
+        document.getElementById("bgYellow")
+            .addEventListener("click", function() {
+                document.body.style.backgroundColor = "#ffffcc";
+            });
+
+        document.getElementById("bgReset")
+            .addEventListener("click", function() {
+                document.body.style.backgroundColor = "white";
+            });
+
+
+        // BÀI 6 & 7: THÊM / XÓA CÔNG VIỆC
+        const todoInput = document.getElementById("todoInput");
+        const todoList = document.getElementById("todoList");
+
+        function addTodo() {
+
+            const value = todoInput.value.trim();
+
+            if (value === "") {
+                alert("Vui lòng nhập công việc!");
+                return;
+            }
+
+            // Tạo thẻ li
+            const li = document.createElement("li");
+
+            // Thêm nội dung công việc
+            const span = document.createElement("span");
+            span.textContent = value;
+
+            // Tạo nút xóa
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Xóa";
+            deleteBtn.className = "btn-delete";
+
+            // Xử lý xóa công việc
+            deleteBtn.addEventListener("click", function() {
+                li.remove();
+            });
+
+            // Thêm nội dung và nút xóa vào li
+            li.appendChild(span);
+            li.appendChild(deleteBtn);
+
+            // Thêm li vào danh sách
+            todoList.appendChild(li);
+
+            // Xóa dữ liệu trong input
+            todoInput.value = "";
+            todoInput.focus();
+        }
+
+        document.getElementById("btnAddTodo")
+            .addEventListener("click", addTodo);
+
+        // Nhấn Enter để thêm công việc
+        todoInput.addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+                event.preventDefault();
+                addTodo();
+            }
+
+        });
+
+
+        // BÀI 8: ĐẾM KÝ TỰ
+        const textLengthInput =
+            document.getElementById("textLengthInput");
+
+        textLengthInput.addEventListener("input", function() {
+
+            document.getElementById("charCount")
+                .textContent = textLengthInput.value.length;
+
+        });
+
+
+        // BÀI 9: ĐỔI KIỂU CHỮ KHI HOVER
+        const hoverPara = document.getElementById("hoverPara");
+
+        hoverPara.addEventListener("mouseover", function() {
+
+            hoverPara.style.fontWeight = "bold";
+            hoverPara.style.fontStyle = "italic";
+
+        });
+
+        hoverPara.addEventListener("mouseout", function() {
+
+            hoverPara.style.fontWeight = "normal";
+            hoverPara.style.fontStyle = "normal";
+
+        });
+
+
+        // BÀI 10: VALIDATE FORM
+        const myForm = document.getElementById("myForm");
+
+        myForm.addEventListener("submit", function(event) {
+
+            // Ngăn trang tải lại
+            event.preventDefault();
+
+            const username = document
+                .getElementById("username")
+                .value.trim();
+
+            const formMessage =
+                document.getElementById("formMessage");
+
+            if (username === "") {
+
+                formMessage.textContent =
+                    "Vui lòng nhập tên người dùng!";
+
+                formMessage.className = "error";
+
+            } else {
+
+                formMessage.textContent =
+                    "Gửi dữ liệu thành công!";
+
+                formMessage.className = "success";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
